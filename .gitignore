@@ -30,3 +30,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### API KEY ###
+config/apikey.txt
