@@ -12,6 +12,7 @@ import java.util.Scanner;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import br.com.alura.screenmatch.excecao.ErroDeConversaoDeAnoException;
 import br.com.alura.screenmatch.modelos.Titulo;
 import br.com.alura.screenmatch.modelos.TituloOmdb;
 
@@ -24,7 +25,7 @@ public class PrincipalComBusca {
 		
 		Path path = Paths.get("config", "apikey.txt").toAbsolutePath();
 		String apikey = Files.readString(path).trim();
-		String url = "https://www.omdbapi.com/?t=" + busca + "&apikey=" + apikey;
+		String url = "https://www.omdbapi.com/?t=" + busca.replace(" ", "+") + "&apikey=" + apikey;
 		try {
 			HttpClient client = HttpClient.newHttpClient();
 			HttpRequest request = HttpRequest.newBuilder()
@@ -54,8 +55,8 @@ public class PrincipalComBusca {
 			System.out.println(e.getMessage());
 		} catch (IllegalArgumentException e) {
 			System.out.println("Algum erro de argumento na busca, verifique o endereço.");			
-		} catch (Exception e) {
-			System.out.println("Aconteceu algo, não sei o que ");
+		} catch (ErroDeConversaoDeAnoException e) {
+			System.out.println(e.getMessage());
 		}
 		
 		System.out.println("O programa finalizou corretamente!");
